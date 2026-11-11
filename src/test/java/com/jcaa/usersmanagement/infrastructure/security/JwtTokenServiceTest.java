@@ -72,6 +72,19 @@ class JwtTokenServiceTest {
     assertThat(exception).isNotNull();
   }
 
+  @Test
+  void shouldRejectMissingSecret() {
+    final IllegalArgumentException exception =
+        assertThrows(
+            IllegalArgumentException.class,
+            () ->
+                new JwtTokenService(
+                    new JwtProperties("", EXPIRATION_SECONDS),
+                    Clock.fixed(NOW, ZoneOffset.UTC)));
+
+    assertThat(exception).hasMessageContaining("JWT_SECRET");
+  }
+
   private static JwtTokenService serviceAt(final Instant instant) {
     return new JwtTokenService(
         new JwtProperties(SECRET, EXPIRATION_SECONDS), Clock.fixed(instant, ZoneOffset.UTC));

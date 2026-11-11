@@ -28,9 +28,29 @@ public class JwtTokenService {
   }
 
   JwtTokenService(final JwtProperties properties, final Clock clock) {
-    this.signingKey = Keys.hmacShaKeyFor(Base64.getDecoder().decode(properties.secret()));
+    this.signingKey = buildSigningKey(properties.secret());
     this.expirationSeconds = properties.expirationSeconds();
     this.clock = clock;
+  }
+
+  private static SecretKey buildSigningKey(final String encodedSecret) {
+    if (encodedSecret == null || encodedSecret.isBlank()) {
+      throw new IllegalArgumentException(
+          "JWT_SECRET es obligatorio y debe contener al menos 32 bytes aleatorios en Base64.");
+    }
+
+    final byte[] decodedSecret;
+    try {
+      decodedSecret = Base64.getDecoder().decode(encodedSecret);
+    } catch (final IllegalArgumentException exception) {
+      throw new IllegalArgumentException("JWT_SECRET debe ser una cadena Base64 valida.", exception);
+    }
+
+    if (decodedSecret.length < 32) {
+      throw new IllegalArgumentException(
+          "JWT_SECRET debe contener al menos 32 bytes aleatorios codificados en Base64.");
+    }
+    return Keys.hmacShaKeyFor(decodedSecret);
   }
 
   public String generate(final UserModel user) {

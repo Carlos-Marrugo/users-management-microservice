@@ -40,7 +40,7 @@ services:
       SMTP_PASSWORD: ${SMTP_PASSWORD:-}
       SMTP_FROM_ADDRESS: ${SMTP_FROM_ADDRESS:-}
       SMTP_FROM_NAME: ${SMTP_FROM_NAME:-Gestion de Usuarios}
-      JWT_SECRET: ${JWT_SECRET:-ZGV2ZWxvcG1lbnQtb25seS1qd3Qtc2VjcmV0LW11c3QtYmUtcmVwbGFjZWQ=}
+      JWT_SECRET: ${JWT_SECRET:?Defina JWT_SECRET en .env o en el entorno antes de iniciar Docker Compose}
       JWT_EXPIRATION_SECONDS: ${JWT_EXPIRATION_SECONDS:-900}
     ports:
       - "8080:8080"
