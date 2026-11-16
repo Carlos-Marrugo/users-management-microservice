@@ -22,14 +22,14 @@ CREATE TABLE IF NOT EXISTS users (
 
 -- Usuario administrador inicial para desarrollo local (password: Admin1234!).
 -- Cambie o elimine este registro antes de usar una base de datos productiva.
-INSERT INTO users (id, name, email, password, role, status)
-VALUES (
-    '00000000-0000-0000-0000-000000000001',
-    'Administrador',
-    'admin@example.com',
-    '$2a$12$sfwkajsls.fktQb0Ngw5cOiSiV3z4LIwbucSAy4sw2wyNlxbUBt4q',
-    'ADMIN',
-    'ACTIVE'
-)
-ON DUPLICATE KEY UPDATE id = id;
+    INSERT INTO users (id, name, email, password, role, status)
+    VALUES (
+        '00000000-0000-0000-0000-000000000001',
+        'Administrador',
+        'admin@example.com',
+        '$2a$12$sfwkajsls.fktQb0Ngw5cOiSiV3z4LIwbucSAy4sw2wyNlxbUBt4q',
+        'ADMIN',
+        'ACTIVE'
+    )
+    ON DUPLICATE KEY UPDATE id = id;
 
